@@ -146,7 +146,7 @@ class FormidableValidatorField {
 		<tr>
 			<td>
 				<label for="field_options[key_validator_invalid_msj_<?php echo $field['id'] ?>]"><?= FormidableKeyFieldManager::t( "Error message" ) ?></label>
-				<span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?= FormidableKeyFieldManager::t( "This is the message show by trhe form is validation not pass." ) ?>"></span>
+				<span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?= FormidableKeyFieldManager::t( "This is the message show by the form is validation not pass." ) ?>"></span>
 			</td>
 			<td>
 				<input type="text" class="frm_classes frm_long_input" name="field_options[key_validator_invalid_msj_<?php echo $field['id'] ?>]" id="field_options[key_validator_invalid_msj_<?php echo $field['id'] ?>]" value="<?php echo $field['key_validator_invalid_msj'] ?>"/>

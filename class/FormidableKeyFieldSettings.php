@@ -24,7 +24,7 @@ class FormidableKeyFieldSettings {
 		$gManager = GManagerFactory::buildManager( 'FormidableKeyFieldManager', 'formidable_key_field', FormidableKeyFieldManager::getShort() );
 		$key      = get_option( FormidableKeyFieldManager::getShort() . 'licence_key' );
 		?>
-		<h3 class="frm_first_h3"><?= FormidableKeyFieldManager::t( "Licence Data for Patter Field" ) ?></h3>
+		<h3 class="frm_first_h3"><?= FormidableKeyFieldManager::t( "Licence Data for Key Field" ) ?></h3>
 		<table class="form-table">
 			<tr>
 				<td width="150px"><?= FormidableKeyFieldManager::t( "Version: " ) ?></td>

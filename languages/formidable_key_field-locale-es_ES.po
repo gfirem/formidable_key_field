@@ -1,0 +1,212 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Formidable key field\n"
+"POT-Creation-Date: 2016-09-18 19:14-0400\n"
+"PO-Revision-Date: 2016-09-18 19:15-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: formidable_key_field.php\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2;t\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: class/FormidableGeneratorField.php:37 class/FormidableGeneratorField.php:51
+msgid "Key generator"
+msgstr "Generador de llave"
+
+#: class/FormidableGeneratorField.php:77
+msgid "Generate random key."
+msgstr "Generar llave aleatoria."
+
+#: class/FormidableGeneratorField.php:113
+msgid "Length"
+msgstr "Longuitud"
+
+#: class/FormidableGeneratorField.php:114
+msgid "Set the length for generate content, by default will be 20."
+msgstr "Establezca el largo del contenido generado, por defecto es 20."
+
+#: class/FormidableGeneratorField.php:122
+msgid "Special characters"
+msgstr "Caracteres especiales"
+
+#: class/FormidableGeneratorField.php:123
+msgid "Check if the generated content will be special characters. "
+msgstr "Marque si el contenido generado contendrá caracteres especiales. "
+
+#: class/FormidableKeyFieldAdmin.php:23
+msgid "Key Validator"
+msgstr "Validador de llave"
+
+#: class/FormidableKeyFieldAdmin.php:42
+msgid "Settings"
+msgstr "Ajustes"
+
+#: class/FormidableKeyFieldSettings.php:27
+msgid "Licence Data for Key Field"
+msgstr "Datos de licencia para Campo de Llave"
+
+#: class/FormidableKeyFieldSettings.php:30
+msgid "Version: "
+msgstr "Versión: "
+
+#: class/FormidableKeyFieldSettings.php:37
+msgid "Order Key: "
+msgstr "Llave: "
+
+#: class/FormidableKeyFieldSettings.php:38
+msgid "Order key send to you with order confirmation, to get updates."
+msgstr ""
+"Llave que se le envió con la confirmación de la orden, para obtener las "
+"actualizaciones"
+
+#: class/FormidableKeyFieldSettings.php:43
+msgid "Key status: "
+msgstr "Estado de la llave:"
+
+#: class/FormidableValidatorField.php:37 class/FormidableValidatorField.php:51
+msgid "Key validator"
+msgstr "Validador de llave"
+
+#: class/FormidableValidatorField.php:78
+msgid "Validate key generated in the set target form."
+msgstr "Valida la llave generada en el formulario fuente. "
+
+#: class/FormidableValidatorField.php:127
+msgid "Select target form"
+msgstr "Seleccione la fuente"
+
+#: class/FormidableValidatorField.php:128
+msgid "Select the form where you generate key with field key generator."
+msgstr ""
+"Seleccione el formulario donde se genero la llave usando el campo generador."
+
+#: class/FormidableValidatorField.php:139
+msgid "Validate if exist"
+msgstr "Validar si existe"
+
+#: class/FormidableValidatorField.php:140
+msgid ""
+"If this options checked, the validation message will show when not exist the "
+"key, otherwise show message if the key exist. "
+msgstr ""
+"Si esta opción se marca, el mensaje de validación se mostrara cuando la "
+"llave no exista, de lo contrario el mensaje se mostrar si la llave existe. "
+
+#: class/FormidableValidatorField.php:148
+msgid "Error message"
+msgstr "Mensaje de error"
+
+#: class/FormidableValidatorField.php:149
+msgid "This is the message show by the form is validation not pass."
+msgstr "Este es el mensaje que se mostrara cuando la validación no pase. "
+
+#: class/GManagerFactory.php:48 class/GManagerFactory.php:85
+#: class/GManagerFactory.php:132 class/GManagerFactory.php:187
+msgid "Error Handling server connections"
+msgstr "Error manejando la conexión con el servidor"
+
+#: class/GManagerFactory.php:79
+msgid "Licence susses deactivated"
+msgstr "Licencia desactivada correctamente"
+
+#: class/GManagerFactory.php:82
+msgid "Licence deactivated request error"
+msgstr "Error desactivando la licencia"
+
+#: class/GManagerFactory.php:89 class/GManagerFactory.php:191
+msgid "Not licence key detected. Please set."
+msgstr "No se detecto ninguna llave de licencia. Establezca alguna."
+
+#: class/GManagerFactory.php:92
+msgid "Licence already deactivated"
+msgstr "La licencia ya fue desactivada"
+
+#: class/GManagerFactory.php:122
+msgid "Licence susses activated"
+msgstr "Licencia activada satisfactoriamente"
+
+#: class/GManagerFactory.php:126
+msgid "Licence activating error"
+msgstr "Error activando la licencia"
+
+#: class/GManagerFactory.php:129
+msgid "Licence activation request error"
+msgstr "Error en la petición de activación de la licencia"
+
+#: class/GManagerFactory.php:136
+msgid "Licence already activated"
+msgstr "La licencia ya se activo"
+
+#: class/GManagerFactory.php:165
+msgid "Licence is active"
+msgstr "Licencia activa"
+
+#: class/GManagerFactory.php:169
+msgid "Licence is inactive"
+msgstr "La licencia esta inactiva"
+
+#: class/GManagerFactory.php:176
+msgid "Invalid license key"
+msgstr "Llave de licencia invalida"
+
+#: class/GManagerFactory.php:180
+msgid "Invalid provided data"
+msgstr "Datos inválidos"
+
+#: class/GManagerFactory.php:184
+msgid "Licence status request unsuccessfully"
+msgstr "Error en la petición de estado de la licencia"
+
+#: plugin-update-checker/github-checker.php:119
+msgid "There is no changelog available."
+msgstr "No hay lista de cambios disponible"
+
+#: plugin-update-checker/plugin-update-checker.php:763
+msgid "Check for updates"
+msgstr "Comprobar actualizaciones"
+
+#: plugin-update-checker/plugin-update-checker.php:807
+msgid "This plugin is up to date."
+msgstr "Esta al día."
+
+#: plugin-update-checker/plugin-update-checker.php:809
+msgid "A new version of this plugin is available."
+msgstr "Hay una versión nueva disponible."
+
+#: plugin-update-checker/plugin-update-checker.php:811
+#, php-format
+msgid "Unknown update checker status \"%s\""
+msgstr "Estado de la actualización desconocido \"%s\""
+
+#. Plugin Name of the plugin/theme
+msgid "Formidable key field"
+msgstr "Formidable Campo de LLave"
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "http://wwww.gfirem.com"
+msgstr "http://wwww.gfirem.com"
+
+#. Description of the plugin/theme
+msgid ""
+"Add two field to formidable, with the golad to create string in one form and "
+"validate in other form"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Guillermo Figueroa Mesa"
+msgstr "Guillermo Figueroa Mesa"
+
+#~ msgid "Generate random content."
+#~ msgstr "Genera contenido aleatorio. "

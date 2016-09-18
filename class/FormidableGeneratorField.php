@@ -120,7 +120,7 @@ class FormidableGeneratorField {
 		<tr>
 			<td>
 				<label for="field_options[key_generator_allow_specials_<?php echo $field['id'] ?>]"><?= FormidableKeyFieldManager::t( "Special characters" ) ?></label>
-				<span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?= FormidableKeyFieldManager::t( "Grant if the generated content will be special characters. " ) ?>"></span>
+				<span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?= FormidableKeyFieldManager::t( "Check if the generated content will be special characters. " ) ?>"></span>
 			</td>
 			<td>
 				<input type="checkbox" <?= $allow_specials ?> name="field_options[key_generator_allow_specials_<?php echo $field['id'] ?>]" id="field_options[key_generator_allow_specials_<?php echo $field['id'] ?>]" value="1"/>
