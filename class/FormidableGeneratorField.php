@@ -114,7 +114,7 @@ class FormidableGeneratorField {
 				<span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?= FormidableKeyFieldManager::t( "Set the length for generate content, by default will be 20." ) ?>"></span>
 			</td>
 			<td>
-				<input type="number" style="width: 10%;" pattern="number" max="50" min="5" maxlength="50" size="100" name="field_options[key_generator_length_<?php echo $field['id'] ?>]" id="field_options[key_generator_length_<?php echo $field['id'] ?>]" value="<?php echo $field['key_generator_length'] ?>"/>
+				<input type="number" style="width: 10%;" pattern="\d*" max="50" min="5" maxlength="50" size="100" name="field_options[key_generator_length_<?php echo $field['id'] ?>]" id="field_options[key_generator_length_<?php echo $field['id'] ?>]" value="<?php echo $field['key_generator_length'] ?>"/>
 			</td>
 		</tr>
 		<tr>
@@ -171,7 +171,7 @@ class FormidableGeneratorField {
 			$maxlength = 'maxlength="' . $field['key_generator_length'] . '"';
 		}
 		?>
-		<input type="text" pattern="\d*" <?php echo "$maxlength"; ?> id='field_<?= $field['field_key'] ?>' name='item_meta[<?= $field['id'] ?>]' value="<?php echo esc_attr( $field['value'] ) ?>"/>
+		<input type="text" <?php echo "$maxlength"; ?> id='field_<?= $field['field_key'] ?>' name='item_meta[<?= $field['id'] ?>]' value="<?php echo esc_attr( $field['value'] ) ?>"/>
 	<?php
 	}
 	

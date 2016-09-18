@@ -3,11 +3,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
 class FormidableKeyFieldAdmin {
 
 	function __construct() {
-		add_action( 'frm_add_settings_section', array( $this, 'add_formidable_key_field_SettingPage' ), 10, 3 );
-		add_filter( 'plugin_action_links', array( $this, 'add_formidable_key_field_setting_link'), 9, 2 );
+		add_filter( 'frm_add_settings_section', array( $this, 'add_formidable_key_field_SettingPage' ) );
+		add_filter( 'plugin_action_links', array( $this, 'add_formidable_key_field_setting_link' ), 9, 2 );
 	}
 
 	/**
@@ -18,7 +19,8 @@ class FormidableKeyFieldAdmin {
 	 * @return mixed
 	 */
 	public function add_formidable_key_field_SettingPage( $sections ) {
-		$sections['key_generator'] = array(
+		$sections['key_validator'] = array(
+			'name'     => FormidableKeyFieldManager::t( "Key Validator" ),
 			'class'    => 'FormidableKeyFieldSettings',
 			'function' => 'route',
 		);

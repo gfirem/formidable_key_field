@@ -15,7 +15,7 @@ class FormidableKeyFieldManager {
 	public function __construct() {
 
 		$this->plugin_slug = 'FormidableKeyField';
-		self::$version     = '0.01';
+		self::$version     = '0.05';
 
 		//Load dependencies
 		require_once 'FormidableGeneratorField.php';
@@ -23,6 +23,12 @@ class FormidableKeyFieldManager {
 
 		require_once 'FormidableValidatorField.php';
 		$validation = new FormidableValidatorField();
+
+		require_once 'FormidableKeyFieldSettings.php';
+		$settings = new FormidableKeyFieldSettings();
+
+		require_once 'FormidableKeyFieldAdmin.php';
+		$admin = new FormidableKeyFieldAdmin();
 
 	}
 
