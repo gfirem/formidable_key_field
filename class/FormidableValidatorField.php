@@ -249,30 +249,32 @@ class FormidableValidatorField {
 	 */
 	public function validate_frm_entry( $errors, $posted_field, $posted_value ) {
 		global $frm_field;
-		if(!empty($posted_value)) {
-			if ( $posted_field->type == "key_validator" ) {
-				$target = $frm_field->get_option( $posted_field, "key_validator_form_target" );
-				$msj    = $frm_field->get_option( $posted_field, "key_validator_invalid_msj" );
-				$exist  = (bool) $frm_field->get_option( $posted_field, "key_validator_exist" );
-				if ( ! empty( $target ) ) {
-					$targets_fields = $frm_field->get_all_types_in_form( $target, 'key_generator' );
-					foreach ( $targets_fields as $field ) {
-						if ( $this->value_exists( $field->id, $posted_value ) == $exist ) {
-							if ( empty( $msj ) ) {
-								$msj = FrmFieldsHelper::get_error_msg( $field, 'invalid' );
-							}
-							$errors = array_merge( $errors, array( 'field' . $posted_field->id => $msj ) );
 
-							return $errors;
+
+		if ( $posted_field->type == "key_validator" ) {
+			if ( empty( $posted_value ) && $posted_field->required ) {
+				$errors = array_merge( $errors, array( 'field' . $posted_field->id => FrmFieldsHelper::get_error_msg( $posted_field, 'blank' ) ) );
+
+				return $errors;
+			}
+			$target = $frm_field->get_option( $posted_field, "key_validator_form_target" );
+			$msj    = $frm_field->get_option( $posted_field, "key_validator_invalid_msj" );
+			$exist  = (bool) $frm_field->get_option( $posted_field, "key_validator_exist" );
+			if ( ! empty( $target ) ) {
+				$targets_fields = $frm_field->get_all_types_in_form( $target, 'key_generator' );
+				foreach ( $targets_fields as $field ) {
+					if ( $this->value_exists( $field->id, $posted_value ) == $exist ) {
+						if ( empty( $msj ) ) {
+							$msj = FrmFieldsHelper::get_error_msg( $field, 'invalid' );
 						}
+						$errors = array_merge( $errors, array( 'field' . $posted_field->id => $msj ) );
+
+						return $errors;
 					}
 				}
-
 			}
 		}
-		else{
-			$errors = array_merge( $errors, array( 'field' . $posted_field->id => FrmFieldsHelper::get_error_msg( $posted_field, 'blank' ) ) );
-		}
+
 
 		return $errors;
 	}

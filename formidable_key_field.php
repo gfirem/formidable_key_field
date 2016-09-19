@@ -3,7 +3,7 @@
  * Plugin Name:       Formidable key field
  * Plugin URI:        http://wwww.gfirem.com
  * Description:       Add two field to formidable, with the golad to create string in one form and validate in other form
- * Version:           0.06
+ * Version:           0.08
  * Author:            Guillermo Figueroa Mesa
  * Author URI:        http://wwww.gfirem.com
  * Text Domain:       formidable_key_field-locale
@@ -17,6 +17,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'FormidableKeyField' ) ) :
+
+	require_once 'plugin-update-checker/plugin-update-checker.php';
+
+	$myUpdateChecker = PucFactory::buildUpdateChecker( 'http://gfirem.com/update-services/?action=get_metadata&slug=formidable_key_field', __FILE__ );
+	$myUpdateChecker->addQueryArgFilter( 'appendFormidableKeyFieldQueryArgsCredentials' );
+
+	/**
+	 * Append the order key to the update server URL
+	 *
+	 * @param $queryArgs
+	 *
+	 * @return
+	 */
+	function appendFormidableKeyFieldQueryArgsCredentials( $queryArgs ) {
+		$queryArgs['order_key'] = get_option( FormidablePatternFieldManager::getShort() . 'licence_key', '' );
+
+		return $queryArgs;
+	}
 
 	class FormidableKeyField {
 
