@@ -3,8 +3,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once 'Helper.php';
-
 class FormidableGeneratorField {
 	
 	function __construct() {

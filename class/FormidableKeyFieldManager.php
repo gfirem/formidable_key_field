@@ -48,7 +48,7 @@ class FormidableKeyFieldManager {
 	 * @return string|void
 	 */
 	public static function t( $str ) {
-		return __( $str, 'privanz-locale' );
+		return __( $str, 'formidable_key_field-locale' );
 	}
 
 	/**
