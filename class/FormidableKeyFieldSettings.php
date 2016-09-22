@@ -53,6 +53,9 @@ class FormidableKeyFieldSettings {
 			$gManager->activate( $_POST[ FormidableKeyFieldManager::getShort() . '_key' ] );
 			update_option( FormidableKeyFieldManager::getShort() . 'licence_key', $_POST[ FormidableKeyFieldManager::getShort() . '_key' ] );
 		}
+		else{
+			delete_option(FormidableKeyFieldManager::getShort() . 'licence_key');
+		}
 		self::display_form();
 	}
 }

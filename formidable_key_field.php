@@ -3,7 +3,7 @@
  * Plugin Name:       Formidable key field
  * Plugin URI:        http://wwww.gfirem.com
  * Description:       Add two field to formidable, with the golad to create string in one form and validate in other form
- * Version:           0.08
+ * Version:           0.09
  * Author:            Guillermo Figueroa Mesa
  * Author URI:        http://wwww.gfirem.com
  * Text Domain:       formidable_key_field-locale

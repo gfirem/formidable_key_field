@@ -7,6 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class FormidableKeyFieldAdmin {
 
 	function __construct() {
+		require_once 'GManagerFactory.php';
+
 		add_filter( 'frm_add_settings_section', array( $this, 'add_formidable_key_field_SettingPage' ) );
 		add_filter( 'plugin_action_links', array( $this, 'add_formidable_key_field_setting_link' ), 9, 2 );
 	}
@@ -19,8 +21,8 @@ class FormidableKeyFieldAdmin {
 	 * @return mixed
 	 */
 	public function add_formidable_key_field_SettingPage( $sections ) {
-		$sections['key_validator'] = array(
-			'name'     => FormidableKeyFieldManager::t( "Key Validator" ),
+		$sections['licences_key'] = array(
+			'name'     => FormidableKeyFieldManager::t( "License Key Generator" ),
 			'class'    => 'FormidableKeyFieldSettings',
 			'function' => 'route',
 		);
@@ -39,7 +41,7 @@ class FormidableKeyFieldAdmin {
 	 */
 	public function add_formidable_key_field_setting_link( $links, $pluginFile ) {
 		if ( $pluginFile == 'formidable_key_field/formidable_key_field.php' ) {
-			$link = sprintf( '<a href="%s">%s</a>', esc_attr( admin_url( 'admin.php?page=formidable-settings&t=pattern_settings' ) ), FormidableKeyFieldManager::t( "Settings" ) );
+			$link = sprintf( '<a href="%s">%s</a>', esc_attr( admin_url( 'admin.php?page=formidable-settings&t=licences_key_settings' ) ), FormidableKeyFieldManager::t( "Settings" ) );
 			array_unshift( $links, $link );
 		}
 
