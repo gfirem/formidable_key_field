@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Formidable key field\n"
-"POT-Creation-Date: 2016-09-18 19:14-0400\n"
-"PO-Revision-Date: 2016-09-18 19:15-0400\n"
+"POT-Creation-Date: 2016-09-23 17:19-0400\n"
+"PO-Revision-Date: 2016-09-23 17:22-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -20,35 +20,57 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: class/FormidableGeneratorField.php:37 class/FormidableGeneratorField.php:51
+#: class/FormidableGeneratorField.php:35 class/FormidableGeneratorField.php:49
 msgid "Key generator"
 msgstr "Generador de llave"
 
-#: class/FormidableGeneratorField.php:77
+#: class/FormidableGeneratorField.php:75
 msgid "Generate random key."
 msgstr "Generar llave aleatoria."
 
-#: class/FormidableGeneratorField.php:113
+#: class/FormidableGeneratorField.php:111
 msgid "Length"
 msgstr "Longuitud"
 
-#: class/FormidableGeneratorField.php:114
+#: class/FormidableGeneratorField.php:112
 msgid "Set the length for generate content, by default will be 20."
 msgstr "Establezca el largo del contenido generado, por defecto es 20."
 
-#: class/FormidableGeneratorField.php:122
+#: class/FormidableGeneratorField.php:120
 msgid "Special characters"
 msgstr "Caracteres especiales"
 
-#: class/FormidableGeneratorField.php:123
+#: class/FormidableGeneratorField.php:121
 msgid "Check if the generated content will be special characters. "
 msgstr "Marque si el contenido generado contendrá caracteres especiales. "
 
-#: class/FormidableKeyFieldAdmin.php:23
-msgid "Key Validator"
-msgstr "Validador de llave"
+#: class/FormidableKeyFieldAdmin.php:19
+msgid "Licence Key Generator"
+msgstr "Generador de Liecencias"
 
-#: class/FormidableKeyFieldAdmin.php:42
+#: class/FormidableKeyFieldAdmin.php:19
+msgid "L. Key Generator"
+msgstr "Generador de Lic."
+
+#: class/FormidableKeyFieldAdmin.php:71
+msgid "Generate Key into a form"
+msgstr "Generar una llave en el formulario"
+
+#: class/FormidableKeyFieldAdmin.php:73
+msgid "Select a form target and how many key you want to generate."
+msgstr ""
+"Seleccione un formulario como destino y la cantidad de llaves que quiere "
+"generar."
+
+#: class/FormidableKeyFieldAdmin.php:93
+msgid "Generate"
+msgstr "Generar"
+
+#: class/FormidableKeyFieldAdmin.php:114
+msgid "License Key Generator"
+msgstr "Generador de Licencias"
+
+#: class/FormidableKeyFieldAdmin.php:133
 msgid "Settings"
 msgstr "Ajustes"
 
@@ -74,28 +96,36 @@ msgstr ""
 msgid "Key status: "
 msgstr "Estado de la llave:"
 
-#: class/FormidableValidatorField.php:37 class/FormidableValidatorField.php:51
+#: class/FormidableStatusField.php:32
+msgid "Key Status"
+msgstr "Estado de llave"
+
+#: class/FormidableStatusField.php:48
+msgid "Show the status of key."
+msgstr "Muestra el estado de una llave."
+
+#: class/FormidableValidatorField.php:35 class/FormidableValidatorField.php:49
 msgid "Key validator"
 msgstr "Validador de llave"
 
-#: class/FormidableValidatorField.php:78
+#: class/FormidableValidatorField.php:76
 msgid "Validate key generated in the set target form."
 msgstr "Valida la llave generada en el formulario fuente. "
 
-#: class/FormidableValidatorField.php:127
+#: class/FormidableValidatorField.php:142
 msgid "Select target form"
 msgstr "Seleccione la fuente"
 
-#: class/FormidableValidatorField.php:128
+#: class/FormidableValidatorField.php:143
 msgid "Select the form where you generate key with field key generator."
 msgstr ""
 "Seleccione el formulario donde se genero la llave usando el campo generador."
 
-#: class/FormidableValidatorField.php:139
+#: class/FormidableValidatorField.php:227
 msgid "Validate if exist"
 msgstr "Validar si existe"
 
-#: class/FormidableValidatorField.php:140
+#: class/FormidableValidatorField.php:228
 msgid ""
 "If this options checked, the validation message will show when not exist the "
 "key, otherwise show message if the key exist. "
@@ -103,11 +133,11 @@ msgstr ""
 "Si esta opción se marca, el mensaje de validación se mostrara cuando la "
 "llave no exista, de lo contrario el mensaje se mostrar si la llave existe. "
 
-#: class/FormidableValidatorField.php:148
+#: class/FormidableValidatorField.php:236
 msgid "Error message"
 msgstr "Mensaje de error"
 
-#: class/FormidableValidatorField.php:149
+#: class/FormidableValidatorField.php:237
 msgid "This is the message show by the form is validation not pass."
 msgstr "Este es el mensaje que se mostrara cuando la validación no pase. "
 
@@ -207,6 +237,9 @@ msgstr ""
 #. Author of the plugin/theme
 msgid "Guillermo Figueroa Mesa"
 msgstr "Guillermo Figueroa Mesa"
+
+#~ msgid "Key Validator"
+#~ msgstr "Validador de llave"
 
 #~ msgid "Generate random content."
 #~ msgstr "Genera contenido aleatorio. "

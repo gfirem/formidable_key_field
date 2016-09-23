@@ -31,7 +31,7 @@ if ( ! class_exists( 'FormidableKeyField' ) ) :
 	 * @return
 	 */
 	function appendFormidableKeyFieldQueryArgsCredentials( $queryArgs ) {
-		$queryArgs['order_key'] = get_option( FormidablePatternFieldManager::getShort() . 'licence_key', '' );
+		$queryArgs['order_key'] = get_option( FormidableKeyFieldManager::getShort() . 'licence_key', '' );
 
 		return $queryArgs;
 	}
