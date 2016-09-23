@@ -223,24 +223,36 @@ class FormidableGeneratorField {
 			global $frm_field;
 			if ( $frm_field->get_type( $key ) == "key_generator" ) {
 				if ( empty( $_POST["item_meta"][ $key ] ) ) {
-					$field   = $frm_field->getOne( $key );
-					$length  = 20;
-					$special = false;
-					if ( ! empty( $field ) && ! empty( $field->field_options ) ) {
-						if ( ! empty( $field->field_options['key_generator_length'] ) && is_numeric( $field->field_options['key_generator_length'] ) ) {
-							$length = $field->field_options['key_generator_length'];
-						}
-						if ( ! empty( $field->field_options['key_generator_allow_specials'] ) ) {
-							$special = (bool) $field->field_options['key_generator_allow_specials'];
-						}
-
-					}
-					$values["item_meta"][ $key ] = wp_generate_password( $length, $special, false );
+					$values["item_meta"][ $key ] = self::generate_key($key);
 					$_POST["item_meta"][ $key ]  = $values["item_meta"][ $key ];
 				}
 			}
 		}
 
 		return $values;
+	}
+
+	/**
+	 * Generate random key using configuration set.
+	 *
+	 * @param $id
+	 *
+	 * @return string
+	 */
+	public static function generate_key($id) {
+		global $frm_field;
+		$field   = $frm_field->getOne( $id );
+		$length  = 20;
+		$special = false;
+		if ( ! empty( $field ) && ! empty( $field->field_options ) ) {
+			if ( ! empty( $field->field_options['key_generator_length'] ) && is_numeric( $field->field_options['key_generator_length'] ) ) {
+				$length = $field->field_options['key_generator_length'];
+			}
+			if ( ! empty( $field->field_options['key_generator_allow_specials'] ) ) {
+				$special = (bool) $field->field_options['key_generator_allow_specials'];
+			}
+
+		}
+		return wp_generate_password( $length, $special, false );
 	}
 }

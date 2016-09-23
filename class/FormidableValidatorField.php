@@ -336,7 +336,7 @@ class FormidableValidatorField {
 	 * @return mixed
 	 */
 	public function validate_frm_entry( $errors, $posted_field, $posted_value ) {
-		global $frm_field;
+		global $frm_field, $frm_entry_meta, $frm_form;
 
 
 		if ( $posted_field->type == "key_validator" ) {
@@ -353,16 +353,43 @@ class FormidableValidatorField {
 					$msj = FrmFieldsHelper::get_error_msg( $frm_field->getOne( $posted_field->id ), 'invalid' );
 				}
 				$fields_ids = array();
+				$key_used   = array();
 				foreach ( json_decode( $target ) as $key => $item ) {
 					$targets_fields = $frm_field->get_all_types_in_form( $item->value, 'key_generator' );
-					foreach ( $targets_fields as $field ) {
-						$fields_ids[] = $field->id;
+					if ( ! empty( $targets_fields ) ) {
+						foreach ( $targets_fields as $field ) {
+							$fields_ids[] = $field->id;
+						}
 					}
-				}
-				if ( $this->value_exists( $fields_ids, htmlentities( $posted_value ) ) == $exist ) {
-					$errors = array_merge( $errors, array( 'field' . $posted_field->id => $msj ) );
+					$targets_fields_used = $frm_field->get_all_types_in_form( $item->value, 'key_used' );
+					if ( ! empty( $targets_fields_used ) ) {
+						foreach ( $targets_fields_used as $field ) {
+							$key_used[] = $field->id;
+						}
+					}
 
-					return $errors;
+				}
+				if ( ! empty( $fields_ids ) ) {
+					$entry_id = $this->value_exists( $fields_ids, htmlentities( $posted_value ) );
+					if ( empty( $entry_id ) != $exist ) {
+						$errors = array_merge( $errors, array( 'field' . $posted_field->id => $msj ) );
+
+						return $errors;
+					} else {
+						foreach ( $fields_ids as $key => $id ) {
+							$exist = $this->value_exist( $id, htmlentities( $posted_value ) );
+							if ( ! empty( $exist ) ) {
+								$field          = $frm_field->getOne( $id );
+								$field_statuses = $frm_field->get_all_types_in_form( $field->form_id, "key_used" );
+								if ( ! empty( $field_statuses ) ) {
+									foreach ( $field_statuses as $key_1 => $status_field ) {
+										$result = FrmEntryMeta::update_entry_meta( $entry_id, $status_field->id, null, '1' );
+									}
+
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -381,9 +408,25 @@ class FormidableValidatorField {
 	 */
 	public function value_exists( $field_ids, $value ) {
 		global $wpdb;
-		$table        = $wpdb->prefix . "frm_item_metas";
-		$count_result = $wpdb->get_var( "SELECT COUNT(*) FROM $table WHERE field_id IN (" . join( ", ", $field_ids ) . ") AND meta_value = '" . $value . "'" );
+		$table  = $wpdb->prefix . "frm_item_metas";
+		$result = $wpdb->get_var( "SELECT item_id FROM $table WHERE field_id IN (" . join( ", ", $field_ids ) . ") AND meta_value = '" . $value . "'" );
 
-		return $count_result > 0;
+		return $result;
+	}
+
+	/**
+	 * Check if given id have the key value
+	 *
+	 * @param $field_id
+	 * @param $value
+	 *
+	 * @return mixed
+	 */
+	public function value_exist( $field_id, $value ) {
+		global $wpdb;
+		$table  = $wpdb->prefix . "frm_item_metas";
+		$result = $wpdb->get_var( "SELECT item_id FROM $table WHERE field_id = '" . $field_id . "' AND meta_value = '" . $value . "'" );
+
+		return $result;
 	}
 }
