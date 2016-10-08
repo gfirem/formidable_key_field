@@ -137,6 +137,13 @@ class FormidableValidatorField {
 				text-decoration: none;
 			}
 		</style>
+		<tr class="frm_options_heading">
+			<td colspan="2">
+				<div class="menu-settings">
+					<h3 class="frm_no_bg"><?= FormidableKeyFieldManager::t( "Validate options" ) ?></h3>
+				</div>
+			</td>
+		</tr>
 		<tr>
 			<td>
 				<label for="field_options[key_validator_form_target_<?php echo $field['id'] ?>]"><?= FormidableKeyFieldManager::t( "Select target form" ) ?></label>
@@ -313,13 +320,16 @@ class FormidableValidatorField {
 	 */
 	public function add_formidable_key_field_display_options( $display ) {
 		if ( $display['type'] == 'key_validator' ) {
-			$display['unique']         = true;
+			$display['unique']         = false;
 			$display['required']       = true;
+			$display['read_only']       = false;
 			$display['description']    = true;
 			$display['options']        = true;
 			$display['label_position'] = true;
 			$display['css']            = true;
-			$display['conf_field']     = true;
+			$display['conf_field']     = false;
+			$display['default_value']  = true;
+			$display['visibility']     = true;
 		}
 		
 		return $display;
