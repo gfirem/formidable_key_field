@@ -393,7 +393,13 @@ class FormidableValidatorField {
 								$field_statuses = $frm_field->get_all_types_in_form( $field->form_id, "key_used" );
 								if ( ! empty( $field_statuses ) ) {
 									foreach ( $field_statuses as $key_1 => $status_field ) {
-										$result = FrmEntryMeta::update_entry_meta( $entry_id, $status_field->id, null, '1' );
+										$value = FrmEntryMeta::get_entry_meta_by_field($entry_id, $status_field->id);
+										if(empty($value)){
+											$result = FrmEntryMeta::add_entry_meta($entry_id, $status_field->id, null, '1');
+										}
+										else{
+											$result = FrmEntryMeta::update_entry_meta( $entry_id, $status_field->id, null, '1' );
+										}
 									}
 
 								}

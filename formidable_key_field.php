@@ -3,7 +3,7 @@
  * Plugin Name:       Licence Key Generator
  * Plugin URI:        http://wwww.gfirem.com
  * Description:       Add two field to formidable, with the golad to create string in one form and validate in other form
- * Version:           1.01
+ * Version:           1.02
  * Author:            Guillermo Figueroa Mesa
  * Author URI:        http://wwww.gfirem.com
  * Text Domain:       formidable_key_field-locale

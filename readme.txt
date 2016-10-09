@@ -3,7 +3,7 @@ Autor: gfirem
 Tags: formidable, key generator and validation field, string generator, string validation, formidable custom field
 Requires at least: 4.5.0
 Tested up to: 4.6.1
-Stable tag: 1.01
+Stable tag: 1.02
 License: Apache License 2.0
 
 En
@@ -24,6 +24,9 @@ Puede probar un demo en linea http://demo.gfirem.com/copyaction (En ingles)
 
 
 == Changelog ==
+= 1.02 =
+Status field fixed, to avoid lose the status on edit entry.
+
 = 1.01 =
 Adding default value to the validation field, now is possible to get default value from params.
 
