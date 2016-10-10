@@ -16,7 +16,7 @@ class FormidableKeyFieldAdmin {
 	}
 
 	public function addAdminMenu() {
-		add_submenu_page( 'formidable', FormidableKeyFieldManager::t( 'Licence Key Generator' ), FormidableKeyFieldManager::t( 'L. Key Generator' ), 'manage_options', 'formidable-key-generator', array( $this, 'addManagerMenuPage' ), 'dashicons-admin-generic' );
+		add_submenu_page( 'formidable', FormidableKeyFieldManager::t( 'Licence Key Generator' ), FormidableKeyFieldManager::t( 'L. Key Generator' ), 'frm_view_forms', 'formidable-key-generator', array( $this, 'addManagerMenuPage' ), 'dashicons-admin-generic' );
 	}
 
 	function addManagerMenuPage() {
