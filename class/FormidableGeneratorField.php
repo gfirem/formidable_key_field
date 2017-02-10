@@ -6,21 +6,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 class FormidableGeneratorField {
 	
 	function __construct() {
-
-
 		if ( class_exists( "FrmProAppController" ) ) {
 			add_action( 'frm_pro_available_fields', array( $this, 'add_formidable_key_field' ) );
-		} else {
-			add_action( 'frm_available_fields', array( $this, 'add_formidable_key_field' ) );
+			add_action( 'frm_before_field_created', array( $this, 'set_formidable_key_field_options' ) );
+			add_action( 'frm_display_added_fields', array( $this, 'show_formidable_key_field_admin_field' ) );
+			add_action( 'frm_field_options_form', array( $this, 'field_formidable_key_field_option_form' ), 10, 3 );
+			add_action( 'frm_update_field_options', array( $this, 'update_formidable_key_field_options' ), 10, 3 );
+			add_action( 'frm_form_fields', array( $this, 'show_formidable_key_field_front_field' ), 10, 2 );
+			add_action( 'frm_display_value', array( $this, 'display_formidable_key_field_admin_field' ), 10, 3 );
+			add_filter( 'frm_display_field_options', array( $this, 'add_formidable_key_field_display_options' ) );
+			add_filter( 'frm_pre_create_entry', array( $this, 'after_formidable_key_field_create_entry' ) );
 		}
-		add_action( 'frm_before_field_created', array( $this, 'set_formidable_key_field_options' ) );
-		add_action( 'frm_display_added_fields', array( $this, 'show_formidable_key_field_admin_field' ) );
-		add_action( 'frm_field_options_form', array( $this, 'field_formidable_key_field_option_form' ), 10, 3 );
-		add_action( 'frm_update_field_options', array( $this, 'update_formidable_key_field_options' ), 10, 3 );
-		add_action( 'frm_form_fields', array( $this, 'show_formidable_key_field_front_field' ), 10, 2 );
-		add_action( 'frm_display_value', array( $this, 'display_formidable_key_field_admin_field' ), 10, 3 );
-		add_filter( 'frm_display_field_options', array( $this, 'add_formidable_key_field_display_options' ) );
-		add_filter( 'frm_pre_create_entry', array( $this, 'after_formidable_key_field_create_entry' ) );
 	}
 
 	
@@ -205,7 +201,6 @@ class FormidableGeneratorField {
 			$display['options']        = true;
 			$display['label_position'] = true;
 			$display['css']            = true;
-			$display['conf_field']     = true;
 		}
 		
 		return $display;

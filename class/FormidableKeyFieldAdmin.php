@@ -7,16 +7,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 class FormidableKeyFieldAdmin {
 
 	function __construct() {
-		require_once 'GManagerFactory.php';
-
-		add_filter( 'frm_add_settings_section', array( $this, 'add_formidable_key_field_SettingPage' ) );
-		add_filter( 'plugin_action_links', array( $this, 'add_formidable_key_field_setting_link' ), 9, 2 );
-
-		add_action( 'admin_menu', array( $this, 'addAdminMenu' ) );
+		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'fs_plugin_icon_' . FormidableKeyFieldManager::getSlug(), array( $this, 'handle_plugin_icon' ), 10, 1 );
 	}
-
-	public function addAdminMenu() {
-		add_submenu_page( 'formidable', FormidableKeyFieldManager::t( 'Licence Key Generator' ), FormidableKeyFieldManager::t( 'L. Key Generator' ), 'frm_view_forms', 'formidable-key-generator', array( $this, 'addManagerMenuPage' ), 'dashicons-admin-generic' );
+	
+	/**
+	 * Site menu
+	 */
+	public function admin_menu() {
+		add_menu_page( FormidableKeyFieldManager::t( "Key Generator" ), FormidableKeyFieldManager::t( "Key Generator" ), 'frm_view_forms', FormidableKeyFieldManager::getSlug(), array( $this, 'addManagerMenuPage' ), FKF_IMAGE_PATH . "icon-20-gary.png" );
+	}
+	
+	public function handle_plugin_icon( $ico_path ) {
+		return FormidableKeyFieldManager::getSlug() . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'icon-24.png';
 	}
 
 	function addManagerMenuPage() {
@@ -100,40 +103,5 @@ class FormidableKeyFieldAdmin {
 
 		</div>
 	<?php
-	}
-
-	/**
-	 * Add setting page to global formidable settings
-	 *
-	 * @param $sections
-	 *
-	 * @return mixed
-	 */
-	public function add_formidable_key_field_SettingPage( $sections ) {
-		$sections['licences_key'] = array(
-			'name'     => FormidableKeyFieldManager::t( "License Key Generator" ),
-			'class'    => 'FormidableKeyFieldSettings',
-			'function' => 'route',
-		);
-
-		return $sections;
-	}
-
-	/**
-	 * Add a "Settings" link to the plugin row in the "Plugins" page.
-	 *
-	 * @param $links
-	 * @param string $pluginFile
-	 *
-	 * @return array
-	 * @internal param array $pluginMeta Array of meta links.
-	 */
-	public function add_formidable_key_field_setting_link( $links, $pluginFile ) {
-		if ( $pluginFile == 'formidable_key_field/formidable_key_field.php' ) {
-			$link = sprintf( '<a href="%s">%s</a>', esc_attr( admin_url( 'admin.php?page=formidable-settings&t=licences_key_settings' ) ), FormidableKeyFieldManager::t( "Settings" ) );
-			array_unshift( $links, $link );
-		}
-
-		return $links;
 	}
 }

@@ -8,16 +8,14 @@ class FormidableStatusField {
 	function __construct() {
 		if ( class_exists( "FrmProAppController" ) ) {
 			add_action( 'frm_pro_available_fields', array( $this, 'add_formidable_key_field' ) );
-		} else {
-			add_action( 'frm_available_fields', array( $this, 'add_formidable_key_field' ) );
+			add_action( 'frm_display_added_fields', array( $this, 'show_formidable_key_field_admin_field' ) );
+			add_action( 'frm_form_fields', array( $this, 'show_formidable_key_field_front_field' ), 10, 2 );
+			add_action( 'frm_display_value', array( $this, 'display_formidable_key_field_admin_field' ), 10, 3 );
+			add_filter( 'frm_display_field_options', array( $this, 'add_formidable_key_field_display_options' ) );
+			add_filter( 'frm_pre_create_entry', array( $this, 'after_formidable_key_field_create_entry' ) );
+			add_filter( 'frm_validate_entry', array( $this, 'validate_field' ), 10, 3 );
+			add_filter( 'frmpro_fields_replace_shortcodes', array( $this, 'replace_shortcode' ), 10, 4 );
 		}
-		add_action( 'frm_display_added_fields', array( $this, 'show_formidable_key_field_admin_field' ) );
-		add_action( 'frm_form_fields', array( $this, 'show_formidable_key_field_front_field' ), 10, 2 );
-		add_action( 'frm_display_value', array( $this, 'display_formidable_key_field_admin_field' ), 10, 3 );
-		add_filter( 'frm_display_field_options', array( $this, 'add_formidable_key_field_display_options' ) );
-		add_filter( 'frm_pre_create_entry', array( $this, 'after_formidable_key_field_create_entry' ) );
-		add_filter( 'frm_validate_entry', array( $this, 'validate_field' ), 10, 3 );
-		add_filter( 'frmpro_fields_replace_shortcodes', array( $this, 'replace_shortcode' ), 10, 4 );
 	}
 
 	
@@ -176,7 +174,6 @@ class FormidableStatusField {
 			$display['options']        = true;
 			$display['label_position'] = true;
 			$display['css']            = true;
-			$display['conf_field']     = true;
 		}
 		
 		return $display;
