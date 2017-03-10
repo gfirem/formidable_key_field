@@ -1,9 +1,9 @@
 === Formidable Key Field ===
 Autor: gfirem
 Tags: formidable, key generator and validation field, string generator, string validation, formidable custom field
-Requires at least: 4.5.0
-Tested up to: 4.6.1
-Stable tag: 1.02
+Requires at least: 4.6.2
+Tested up to: 4.7.3
+Stable tag: 1.1.0
 License: Apache License 2.0
 
 En
@@ -24,6 +24,9 @@ Puede probar un demo en linea http://demo.gfirem.com/copyaction (En ingles)
 
 
 == Changelog ==
+= 1.1.0 =
+Adding the different update system.
+
 = 1.02 =
 Status field fixed, to avoid lose the status on edit entry.
 
