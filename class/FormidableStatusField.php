@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class FormidableStatusField {
-	
+
 	function __construct() {
 		if ( class_exists( "FrmProAppController" ) ) {
 			add_action( 'frm_pro_available_fields', array( $this, 'add_formidable_key_field' ) );
@@ -18,7 +18,7 @@ class FormidableStatusField {
 		}
 	}
 
-	
+
 	/**
 	 * Add new field to formidable list of fields
 	 *
@@ -28,7 +28,7 @@ class FormidableStatusField {
 	 */
 	public function add_formidable_key_field( $fields ) {
 		$fields['key_used'] = FormidableKeyFieldManager::t( "Key Status" );
-		
+
 		return $fields;
 	}
 
@@ -42,10 +42,10 @@ class FormidableStatusField {
 			return;
 		}
 		?>
-		<div class="frm_html_field_placeholder">
-			<div class="frm_html_field"><?= FormidableKeyFieldManager::t( "Show the status of key." ) ?> </div>
-		</div>
-	<?php
+        <div class="frm_html_field_placeholder">
+            <div class="frm_html_field"><?= FormidableKeyFieldManager::t( "Show the status of key." ) ?> </div>
+        </div>
+		<?php
 	}
 
 	/**
@@ -58,8 +58,7 @@ class FormidableStatusField {
 	 * @return mixed
 	 */
 	public function validate_field( $errors, $values, $exclude ) {
-		global $frm_field;
-		$field_statuses = $frm_field->get_all_types_in_form( $values['form_id'], "key_used" );
+		$field_statuses = FrmField::get_all_types_in_form( $values['form_id'], "key_used" );
 
 		foreach ( $field_statuses as $key => $item ) {
 			$value = FrmEntryMeta::get_entry_meta_by_field( $values['id'], $key );
@@ -90,7 +89,7 @@ class FormidableStatusField {
 		$field['value'] = stripslashes_deep( $field['value'] );
 		if ( $field['value'] == '1' ) {
 			?>
-			<span class="dashicons dashicons-yes" style="color: #008000;"></span><?php
+            <span class="dashicons dashicons-yes" style="color: #008000;"></span><?php
 		} else {
 			?><span class="dashicons dashicons-no-alt" style="color: #ff0000;"></span><?php
 		}
@@ -131,7 +130,7 @@ class FormidableStatusField {
 
 		return $value;
 	}
-	
+
 	/**
 	 * Add the HTML to display the field in the admin area
 	 *
@@ -155,10 +154,10 @@ class FormidableStatusField {
 		} else {
 			$value = '<span class="dashicons dashicons-no-alt" style="color: #ff0000;"></span>';
 		}
-		
+
 		return $value;
 	}
-	
+
 	/**
 	 * Set display option for the field
 	 *
@@ -175,7 +174,7 @@ class FormidableStatusField {
 			$display['label_position'] = true;
 			$display['css']            = true;
 		}
-		
+
 		return $display;
 	}
 
@@ -187,8 +186,8 @@ class FormidableStatusField {
 	 */
 	public function after_formidable_key_field_create_entry( $values ) {
 		foreach ( $values["item_meta"] as $key => $value ) {
-			global $frm_field;
-			if ( $frm_field->get_type( $key ) == "key_used" ) {
+			$field_type = FrmField::get_type( $key );
+			if ( $field_type === "key_used" ) {
 				if ( empty( $_POST["item_meta"][ $key ] ) ) {
 					$values["item_meta"][ $key ] = '0';
 					$_POST["item_meta"][ $key ]  = $values["item_meta"][ $key ];

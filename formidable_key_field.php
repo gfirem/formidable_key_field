@@ -1,9 +1,9 @@
 <?php
 /*
- * Plugin Name:       Licence Key Generator
+ * Plugin Name:       GFireM Key Generator
  * Plugin URI:        http://wwww.gfirem.com
  * Description:       Add two field to formidable, with the golad to create string in one form and validate in other form
- * Version:           1.1.0
+ * Version:           2.0.0
  * Author:            Guillermo Figueroa Mesa
  * Author URI:        http://wwww.gfirem.com
  * Text Domain:       formidable_key_field-locale
@@ -17,16 +17,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'FormidableKeyField' ) ) {
-	
+
 	class FormidableKeyField {
-		
+
 		/**
 		 * Instance of this class.
 		 *
 		 * @var object
 		 */
 		protected static $instance = null;
-		
+
 		/**
 		 * Initialize the plugin.
 		 */
@@ -40,12 +40,12 @@ if ( ! class_exists( 'FormidableKeyField' ) ) {
 			define( 'FKF_CLASS_PATH', FKF_ABSPATH . 'class/' );
 			// Load plugin text domain
 			add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
-			
+
 			require_once 'class/FormidableKeyFieldManager.php';
-			$manager = new FormidableKeyFieldManager();
-			
+			new FormidableKeyFieldManager();
+
 		}
-		
+
 		/**
 		 * Return an instance of this class.
 		 *
@@ -56,10 +56,10 @@ if ( ! class_exists( 'FormidableKeyField' ) ) {
 			if ( null == self::$instance ) {
 				self::$instance = new self;
 			}
-			
+
 			return self::$instance;
 		}
-		
+
 		/**
 		 * Load the plugin text domain for translation.
 		 */
@@ -67,6 +67,6 @@ if ( ! class_exists( 'FormidableKeyField' ) ) {
 			load_plugin_textdomain( 'formidable_key_field-locale', false, basename( dirname( __FILE__ ) ) . '/languages' );
 		}
 	}
-	
+
 	add_action( 'plugins_loaded', array( 'FormidableKeyField', 'get_instance' ) );
 }
