@@ -4,22 +4,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class FormidableGeneratorField {
-
+	
 	function __construct() {
-		if ( class_exists( "FrmProAppController" ) ) {
-			add_action( 'frm_pro_available_fields', array( $this, 'add_formidable_key_field' ) );
-			add_action( 'frm_before_field_created', array( $this, 'set_formidable_key_field_options' ) );
-			add_action( 'frm_display_added_fields', array( $this, 'show_formidable_key_field_admin_field' ) );
-			add_action( 'frm_field_options_form', array( $this, 'field_formidable_key_field_option_form' ), 10, 3 );
-			add_action( 'frm_update_field_options', array( $this, 'update_formidable_key_field_options' ), 10, 3 );
-			add_action( 'frm_form_fields', array( $this, 'show_formidable_key_field_front_field' ), 10, 2 );
-			add_action( 'frm_display_value', array( $this, 'display_formidable_key_field_admin_field' ), 10, 3 );
-			add_filter( 'frm_display_field_options', array( $this, 'add_formidable_key_field_display_options' ) );
-			add_filter( 'frm_pre_create_entry', array( $this, 'after_formidable_key_field_create_entry' ) );
-		}
+		add_action( 'frm_pro_available_fields', array( $this, 'add_formidable_key_field' ) );
+		add_action( 'frm_before_field_created', array( $this, 'set_formidable_key_field_options' ) );
+		add_action( 'frm_display_added_fields', array( $this, 'show_formidable_key_field_admin_field' ) );
+		add_action( 'frm_field_options_form', array( $this, 'field_formidable_key_field_option_form' ), 10, 3 );
+		add_action( 'frm_update_field_options', array( $this, 'update_formidable_key_field_options' ), 10, 3 );
+		add_action( 'frm_form_fields', array( $this, 'show_formidable_key_field_front_field' ), 10, 2 );
+		add_action( 'frm_display_value', array( $this, 'display_formidable_key_field_admin_field' ), 10, 3 );
+		add_filter( 'frm_display_field_options', array( $this, 'add_formidable_key_field_display_options' ) );
+		add_filter( 'frm_pre_create_entry', array( $this, 'after_formidable_key_field_create_entry' ) );
 	}
-
-
+	
+	
 	/**
 	 * Add new field to formidable list of fields
 	 *
@@ -28,11 +26,14 @@ class FormidableGeneratorField {
 	 * @return mixed
 	 */
 	public function add_formidable_key_field( $fields ) {
-		$fields['key_generator'] = FormidableKeyFieldManager::t( "Key generator" );
-
+		$fields['key_generator'] = array(
+			'name' => FormidableKeyFieldManager::t( "Key generator" ),
+			'icon' => 'icon fkg-magic'
+		);
+		
 		return $fields;
 	}
-
+	
 	/**
 	 * Set the default options for the field
 	 *
@@ -43,20 +44,20 @@ class FormidableGeneratorField {
 	public function set_formidable_key_field_options( $fieldData ) {
 		if ( $fieldData['type'] == 'key_generator' ) {
 			$fieldData['name'] = FormidableKeyFieldManager::t( "Key generator" );
-
+			
 			$defaults = array(
 				'key_generator_length'         => '',
 				'key_generator_allow_specials' => '',
 			);
-
+			
 			foreach ( $defaults as $k => $v ) {
 				$fieldData['field_options'][ $k ] = $v;
 			}
 		}
-
+		
 		return $fieldData;
 	}
-
+	
 	/**
 	 * Show the field placeholder in the admin area
 	 *
@@ -67,13 +68,13 @@ class FormidableGeneratorField {
 			return;
 		}
 		?>
-        <div class="frm_html_field_placeholder">
-            <div class="frm_html_field"><?= FormidableKeyFieldManager::t( "Generate random key." ) ?> </div>
-        </div>
+		<div class="frm_html_field_placeholder">
+			<div class="frm_html_field"><?php echo FormidableKeyFieldManager::t( "Generate random key." ) ?> </div>
+		</div>
 		<?php
 	}
-
-
+	
+	
 	/**
 	 * Display the additional options for the new field
 	 *
@@ -85,44 +86,44 @@ class FormidableGeneratorField {
 		if ( $field['type'] != 'key_generator' ) {
 			return;
 		}
-
+		
 		$defaults = array(
 			'key_generator_length'         => '',
 			'key_generator_allow_specials' => '',
 		);
-
+		
 		foreach ( $defaults as $k => $v ) {
 			if ( ! isset( $field[ $k ] ) ) {
 				$field[ $k ] = $v;
 			}
 		}
-
+		
 		$allow_specials = "";
 		if ( $field['key_generator_allow_specials'] == "1" ) {
 			$allow_specials = "checked='checked'";
 		}
 		?>
-        <tr>
-            <td>
-                <label for="field_options[key_generator_length_<?php echo $field['id'] ?>]"><?= FormidableKeyFieldManager::t( "Length" ) ?></label>
-                <span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?= FormidableKeyFieldManager::t( "Set the length for generate content, by default will be 20." ) ?>"></span>
-            </td>
-            <td>
-                <input type="number" style="width: 10%;" pattern="\d*" max="50" min="5" maxlength="50" size="100" name="field_options[key_generator_length_<?php echo $field['id'] ?>]" id="field_options[key_generator_length_<?php echo $field['id'] ?>]" value="<?php echo $field['key_generator_length'] ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="field_options[key_generator_allow_specials_<?php echo $field['id'] ?>]"><?= FormidableKeyFieldManager::t( "Special characters" ) ?></label>
-                <span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?= FormidableKeyFieldManager::t( "Check if the generated content will be special characters. " ) ?>"></span>
-            </td>
-            <td>
-                <input type="checkbox" <?= $allow_specials ?> name="field_options[key_generator_allow_specials_<?php echo $field['id'] ?>]" id="field_options[key_generator_allow_specials_<?php echo $field['id'] ?>]" value="1"/>
-            </td>
-        </tr>
+		<tr>
+			<td>
+				<label for="field_options[key_generator_length_<?php echo $field['id'] ?>]"><?php echo FormidableKeyFieldManager::t( "Length" ) ?></label>
+				<span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?php echo FormidableKeyFieldManager::t( "Set the length for generate content, by default will be 20." ) ?>"></span>
+			</td>
+			<td>
+				<input type="number" style="width: 10%;" pattern="\d*" max="50" min="5" maxlength="50" size="100" name="field_options[key_generator_length_<?php echo $field['id'] ?>]" id="field_options[key_generator_length_<?php echo $field['id'] ?>]" value="<?php echo $field['key_generator_length'] ?>"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="field_options[key_generator_allow_specials_<?php echo $field['id'] ?>]"><?php echo FormidableKeyFieldManager::t( "Special characters" ) ?></label>
+				<span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?php echo FormidableKeyFieldManager::t( "Check if the generated content will be special characters. " ) ?>"></span>
+			</td>
+			<td>
+				<input type="checkbox" <?php echo $allow_specials ?> name="field_options[key_generator_allow_specials_<?php echo $field['id'] ?>]" id="field_options[key_generator_allow_specials_<?php echo $field['id'] ?>]" value="1"/>
+			</td>
+		</tr>
 		<?php
 	}
-
+	
 	/**
 	 * Update the field options from the admin area
 	 *
@@ -136,19 +137,19 @@ class FormidableGeneratorField {
 		if ( $field->type != 'key_generator' ) {
 			return $field_options;
 		}
-
+		
 		$defaults = array(
 			'key_generator_length'         => '',
 			'key_generator_allow_specials' => '',
 		);
-
+		
 		foreach ( $defaults as $opt => $default ) {
 			$field_options[ $opt ] = isset( $values['field_options'][ $opt . '_' . $field->id ] ) ? $values['field_options'][ $opt . '_' . $field->id ] : $default;
 		}
-
+		
 		return $field_options;
 	}
-
+	
 	/**
 	 * Add the HTML for the field on the front end
 	 *
@@ -165,10 +166,10 @@ class FormidableGeneratorField {
 			$maxlength = 'maxlength="' . $field['key_generator_length'] . '"';
 		}
 		?>
-        <input type="text" <?php echo "$maxlength"; ?> id='field_<?= $field['field_key'] ?>' name='item_meta[<?= $field['id'] ?>]' value="<?php echo esc_attr( $field['value'] ) ?>"/>
+		<input type="text" <?php echo "$maxlength"; ?> id='field_<?php echo $field['field_key'] ?>' name='item_meta[<?php echo $field['id'] ?>]' value="<?php echo esc_attr( $field['value'] ) ?>"/>
 		<?php
 	}
-
+	
 	/**
 	 * Add the HTML to display the field in the admin area
 	 *
@@ -182,10 +183,10 @@ class FormidableGeneratorField {
 		if ( $field->type != 'key_generator' || empty( $value ) ) {
 			return $value;
 		}
-
+		
 		return $value;
 	}
-
+	
 	/**
 	 * Set display option for the field
 	 *
@@ -202,10 +203,10 @@ class FormidableGeneratorField {
 			$display['label_position'] = true;
 			$display['css']            = true;
 		}
-
+		
 		return $display;
 	}
-
+	
 	/**
 	 * Set random value after create an entry, and avoid change when update
 	 *
@@ -223,10 +224,10 @@ class FormidableGeneratorField {
 				}
 			}
 		}
-
+		
 		return $values;
 	}
-
+	
 	/**
 	 * Generate random key using configuration set.
 	 *
@@ -245,9 +246,9 @@ class FormidableGeneratorField {
 			if ( ! empty( $field->field_options['key_generator_allow_specials'] ) ) {
 				$special = (bool) $field->field_options['key_generator_allow_specials'];
 			}
-
+			
 		}
-
+		
 		return wp_generate_password( $length, $special, false );
 	}
 }

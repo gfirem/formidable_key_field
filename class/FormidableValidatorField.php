@@ -4,24 +4,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class FormidableValidatorField {
-
+	
 	function __construct() {
-
-
-		if ( class_exists( "FrmProAppController" ) ) {
-			add_action( 'frm_pro_available_fields', array( $this, 'add_formidable_key_field' ) );
-			add_action( 'frm_before_field_created', array( $this, 'set_formidable_key_field_options' ) );
-			add_action( 'frm_display_added_fields', array( $this, 'show_formidable_key_field_admin_field' ) );
-			add_action( 'frm_field_options_form', array( $this, 'field_formidable_key_field_option_form' ), 10, 3 );
-			add_action( 'frm_update_field_options', array( $this, 'update_formidable_key_field_options' ), 10, 3 );
-			add_action( 'frm_form_fields', array( $this, 'show_formidable_key_field_front_field' ), 10, 2 );
-			add_action( 'frm_display_value', array( $this, 'display_formidable_key_field_admin_field' ), 10, 3 );
-			add_filter( 'frm_display_field_options', array( $this, 'add_formidable_key_field_display_options' ) );
-			add_filter( "frm_validate_field_entry", array( $this, "validate_frm_entry" ), 10, 3 );
-		}
+		add_action( 'frm_pro_available_fields', array( $this, 'add_formidable_key_field' ) );
+		add_action( 'frm_before_field_created', array( $this, 'set_formidable_key_field_options' ) );
+		add_action( 'frm_display_added_fields', array( $this, 'show_formidable_key_field_admin_field' ) );
+		add_action( 'frm_field_options_form', array( $this, 'field_formidable_key_field_option_form' ), 10, 3 );
+		add_action( 'frm_update_field_options', array( $this, 'update_formidable_key_field_options' ), 10, 3 );
+		add_action( 'frm_form_fields', array( $this, 'show_formidable_key_field_front_field' ), 10, 2 );
+		add_action( 'frm_display_value', array( $this, 'display_formidable_key_field_admin_field' ), 10, 3 );
+		add_filter( 'frm_display_field_options', array( $this, 'add_formidable_key_field_display_options' ) );
+		add_filter( "frm_validate_field_entry", array( $this, "validate_frm_entry" ), 10, 3 );
 	}
-
-
+	
+	
 	/**
 	 * Add new field to formidable list of fields
 	 *
@@ -30,11 +26,14 @@ class FormidableValidatorField {
 	 * @return mixed
 	 */
 	public function add_formidable_key_field( $fields ) {
-		$fields['key_validator'] = FormidableKeyFieldManager::t( "Key validator" );
-
+		$fields['key_validator'] = array(
+			'name' => FormidableKeyFieldManager::t( "Key validator" ),
+			'icon' => 'icon fkg-flashlight'
+		);
+		
 		return $fields;
 	}
-
+	
 	/**
 	 * Set the default options for the field
 	 *
@@ -45,21 +44,21 @@ class FormidableValidatorField {
 	public function set_formidable_key_field_options( $fieldData ) {
 		if ( $fieldData['type'] == 'key_validator' ) {
 			$fieldData['name'] = FormidableKeyFieldManager::t( "Key validator" );
-
+			
 			$defaults = array(
 				'key_validator_form_target' => '',
 				'key_validator_invalid_msj' => '',
 				'key_validator_exist'       => '',
 			);
-
+			
 			foreach ( $defaults as $k => $v ) {
 				$fieldData['field_options'][ $k ] = $v;
 			}
 		}
-
+		
 		return $fieldData;
 	}
-
+	
 	/**
 	 * Show the field placeholder in the admin area
 	 *
@@ -70,13 +69,13 @@ class FormidableValidatorField {
 			return;
 		}
 		?>
-        <div class="frm_html_field_placeholder">
-            <div class="frm_html_field"><?= FormidableKeyFieldManager::t( "Validate key generated in the set target form." ) ?> </div>
-        </div>
+		<div class="frm_html_field_placeholder">
+			<div class="frm_html_field"><?php echo  FormidableKeyFieldManager::t( "Validate key generated in the set target form." ) ?> </div>
+		</div>
 		<?php
 	}
-
-
+	
+	
 	/**
 	 * Display the additional options for the new field
 	 *
@@ -88,24 +87,24 @@ class FormidableValidatorField {
 		if ( $field['type'] != 'key_validator' ) {
 			return;
 		}
-
+		
 		$defaults = array(
 			'key_validator_form_target' => '',
 			'key_validator_invalid_msj' => '',
 			'key_validator_exist'       => '',
 		);
-
+		
 		foreach ( $defaults as $k => $v ) {
 			if ( ! isset( $field[ $k ] ) ) {
 				$field[ $k ] = $v;
 			}
 		}
-
+		
 		$exist_key = "";
 		if ( $field['key_validator_exist'] == "1" ) {
 			$exist_key = "checked='checked'";
 		}
-
+		
 		$fields       = FrmField::getAll( array( "type" => "key_generator" ) );
 		$form_options = '';
 		foreach ( $fields as $item ) {
@@ -120,133 +119,133 @@ class FormidableValidatorField {
 			$fields_targets     = json_encode( $fields_targets_obj );
 		}
 		?>
-        <style>
-            .key_target_icon {
-                vertical-align: middle;
-                text-decoration: none !important;
-                font-weight: normal;
-                text-shadow: none;
-                font-family: dashicons;
-                font-size: 20px;
-            }
-
-            .key_target_icon:hover {
-                text-decoration: none;
-            }
-        </style>
-        <tr class="frm_options_heading">
-            <td colspan="2">
-                <div class="menu-settings">
-                    <h3 class="frm_no_bg"><?= FormidableKeyFieldManager::t( "Validate options" ) ?></h3>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="field_options[key_validator_form_target_<?php echo $field['id'] ?>]"><?= FormidableKeyFieldManager::t( "Select target form" ) ?></label>
-                <span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?= FormidableKeyFieldManager::t( "Select the form where you generate key with field key generator." ) ?>"></span>
-            </td>
-            <td id="target_td_container">
+		<style>
+			.key_target_icon {
+				vertical-align: middle;
+				text-decoration: none !important;
+				font-weight: normal;
+				text-shadow: none;
+				font-family: dashicons;
+				font-size: 20px;
+			}
+			
+			.key_target_icon:hover {
+				text-decoration: none;
+			}
+		</style>
+		<tr class="frm_options_heading">
+			<td colspan="2">
+				<div class="menu-settings">
+					<h3 class="frm_no_bg"><?php echo  FormidableKeyFieldManager::t( "Validate options" ) ?></h3>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="field_options[key_validator_form_target_<?php echo $field['id'] ?>]"><?php echo  FormidableKeyFieldManager::t( "Select target form" ) ?></label>
+				<span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?php echo  FormidableKeyFieldManager::t( "Select the form where you generate key with field key generator." ) ?>"></span>
+			</td>
+			<td id="target_td_container">
 				<?php
 				if ( ! empty( $fields_targets_obj ) ) {
 					$i = 0;
 					foreach ( json_decode( $fields_targets_obj ) as $key => $item ) {
 						?>
-                        <div id="key_validator_form_target_<?php echo $field['id'] ?>" class="field_target_container">
-                            <select name="<?php echo $item->name ?>" id="<?php echo $item->name ?>" class="field_target_select">
-                                <option value=""></option>
+						<div id="key_validator_form_target_<?php echo $field['id'] ?>" class="field_target_container">
+							<select name="<?php echo $item->name ?>" id="<?php echo $item->name ?>" class="field_target_select">
+								<option value=""></option>
 								<?php echo "$form_options"; ?>
-                            </select>
-                            <a class="dashicons-minus key_target_remove key_target_icon" href="javascript:void(0)"></a>
-                            <a class="dashicons-plus key_target_add key_target_icon" href="javascript:void(0)"></a>
-                        </div>
+							</select>
+							<a class="dashicons-minus key_target_remove key_target_icon" href="javascript:void(0)"></a>
+							<a class="dashicons-plus key_target_add key_target_icon" href="javascript:void(0)"></a>
+						</div>
 						<?php
 						$i ++;
 					}
 				} else {
 					?>
-                    <div id="key_validator_form_target_<?php echo $field['id'] ?>" class="field_target_container">
-                        <select name="field_target_0" id="field_target_0" class="field_target_select">
-                            <option value=""></option>
+					<div id="key_validator_form_target_<?php echo $field['id'] ?>" class="field_target_container">
+						<select name="field_target_0" id="field_target_0" class="field_target_select">
+							<option value=""></option>
 							<?php echo "$form_options"; ?>
-                        </select>
-                        <a class="dashicons-minus key_target_remove key_target_icon" href="javascript:void(0)"></a>
-                        <a class="dashicons-plus key_target_add key_target_icon" href="javascript:void(0)"></a>
-                    </div>
+						</select>
+						<a class="dashicons-minus key_target_remove key_target_icon" href="javascript:void(0)"></a>
+						<a class="dashicons-plus key_target_add key_target_icon" href="javascript:void(0)"></a>
+					</div>
 				<?php } ?>
-                <input type="hidden" name="field_options[key_validator_form_target_<?php echo $field['id'] ?>]" id="field_options[key_validator_form_target_<?php echo $field['id'] ?>]" value='<?php echo $field['key_validator_form_target'] ?>'>
-            </td>
-        </tr>
-        <script>
-            jQuery(document).ready(function($) {
-                var start_id = "field_target";
-                var target_id = "field_options[key_validator_form_target_<?php echo $field['id'] ?>]";
-                var serialized_targets = $("input[name='" + target_id + "']").val();
-                if (serialized_targets) {
-                    serialized_targets = $.parseJSON(serialized_targets);
-                    jQuery.each(serialized_targets, function(i, item) {
-                        $("#" + item.name + ">option[value='" + item.value + "']").attr("selected", "selected");
-                    });
-                }
-
-                var onChange = function() {
-                    var serialized = $("select[id^='field_target_']").serializeArray();
-                    var jsonSer = JSON.stringify(serialized);
-                    $("input[name='" + target_id + "']").val(jsonSer);
-                };
-
-                var add_target = function() {
-                    $("#target_td_container").append($("#key_validator_form_target_<?php echo $field['id'] ?>").clone());
-                    var i = 0;
-                    $(".field_target_select").each(function() {
-                        $(this).attr("id", start_id + "_" + i);
-                        $(this).attr("name", start_id + "_" + i);
-                        $(this).change(onChange);
-                        i++;
-                    });
-                    $(".key_target_add").unbind("click").click(add_target);
-                    $(".key_target_remove").unbind("click").click(remove_target);
-                    onChange();
-                };
-
-                var remove_target = function() {
-                    var size = $(".field_target_select").size();
-                    if (size > 1) {
-                        $(this).parent().remove();
-                        $(".key_target_add").unbind("click").click(add_target);
-                        $(".key_target_remove").unbind("click").click(remove_target);
-                        onChange();
-                    }
-                };
-
-                $(".field_target_select").change(onChange);
-
-                $(".key_target_add").click(add_target);
-                $(".key_target_remove").click(remove_target);
-
-            });
-        </script>
-        <tr>
-            <td>
-                <label for="field_options[key_validator_exist_<?php echo $field['id'] ?>]"><?= FormidableKeyFieldManager::t( "Validate if exist" ) ?></label>
-                <span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?= FormidableKeyFieldManager::t( "If this options checked, the validation message will show when not exist the key, otherwise show message if the key exist. " ) ?>"></span>
-            </td>
-            <td>
-                <input type="checkbox" <?= $exist_key ?> name="field_options[key_validator_exist_<?php echo $field['id'] ?>]" id="field_options[key_validator_exist_<?php echo $field['id'] ?>]" value="1"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="field_options[key_validator_invalid_msj_<?php echo $field['id'] ?>]"><?= FormidableKeyFieldManager::t( "Error message" ) ?></label>
-                <span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?= FormidableKeyFieldManager::t( "This is the message show by the form is validation not pass." ) ?>"></span>
-            </td>
-            <td>
-                <input type="text" class="frm_classes frm_long_input" name="field_options[key_validator_invalid_msj_<?php echo $field['id'] ?>]" id="field_options[key_validator_invalid_msj_<?php echo $field['id'] ?>]" value="<?php echo $field['key_validator_invalid_msj'] ?>"/>
-            </td>
-        </tr>
+				<input type="hidden" name="field_options[key_validator_form_target_<?php echo $field['id'] ?>]" id="field_options[key_validator_form_target_<?php echo $field['id'] ?>]" value='<?php echo $field['key_validator_form_target'] ?>'>
+			</td>
+		</tr>
+		<script>
+			jQuery(document).ready(function ($) {
+				var start_id = "field_target";
+				var target_id = "field_options[key_validator_form_target_<?php echo $field['id'] ?>]";
+				var serialized_targets = $("input[name='" + target_id + "']").val();
+				if (serialized_targets) {
+					serialized_targets = $.parseJSON(serialized_targets);
+					jQuery.each(serialized_targets, function (i, item) {
+						$("#" + item.name + ">option[value='" + item.value + "']").attr("selected", "selected");
+					});
+				}
+				
+				var onChange = function () {
+					var serialized = $("select[id^='field_target_']").serializeArray();
+					var jsonSer = JSON.stringify(serialized);
+					$("input[name='" + target_id + "']").val(jsonSer);
+				};
+				
+				var add_target = function () {
+					$("#target_td_container").append($("#key_validator_form_target_<?php echo $field['id'] ?>").clone());
+					var i = 0;
+					$(".field_target_select").each(function () {
+						$(this).attr("id", start_id + "_" + i);
+						$(this).attr("name", start_id + "_" + i);
+						$(this).change(onChange);
+						i++;
+					});
+					$(".key_target_add").unbind("click").click(add_target);
+					$(".key_target_remove").unbind("click").click(remove_target);
+					onChange();
+				};
+				
+				var remove_target = function () {
+					var size = $(".field_target_select").size();
+					if (size > 1) {
+						$(this).parent().remove();
+						$(".key_target_add").unbind("click").click(add_target);
+						$(".key_target_remove").unbind("click").click(remove_target);
+						onChange();
+					}
+				};
+				
+				$(".field_target_select").change(onChange);
+				
+				$(".key_target_add").click(add_target);
+				$(".key_target_remove").click(remove_target);
+				
+			});
+		</script>
+		<tr>
+			<td>
+				<label for="field_options[key_validator_exist_<?php echo $field['id'] ?>]"><?php echo  FormidableKeyFieldManager::t( "Validate if not exist" ) ?></label>
+				<span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?php echo  FormidableKeyFieldManager::t( "If this options checked, the validation message will show when not exist the key, otherwise show the message if the key exist. " ) ?>"></span>
+			</td>
+			<td>
+				<input type="checkbox" <?php echo  $exist_key ?> name="field_options[key_validator_exist_<?php echo $field['id'] ?>]" id="field_options[key_validator_exist_<?php echo $field['id'] ?>]" value="1"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="field_options[key_validator_invalid_msj_<?php echo $field['id'] ?>]"><?php echo  FormidableKeyFieldManager::t( "Error message" ) ?></label>
+				<span class="frm_help frm_icon_font frm_tooltip_icon" title="" data-original-title="<?php echo  FormidableKeyFieldManager::t( "This is the message show if the validation not pass." ) ?>"></span>
+			</td>
+			<td>
+				<input type="text" class="frm_long_input" name="field_options[key_validator_invalid_msj_<?php echo $field['id'] ?>]" id="field_options[key_validator_invalid_msj_<?php echo $field['id'] ?>]" value="<?php echo $field['key_validator_invalid_msj'] ?>"/>
+			</td>
+		</tr>
 		<?php
 	}
-
+	
 	/**
 	 * Update the field options from the admin area
 	 *
@@ -260,20 +259,20 @@ class FormidableValidatorField {
 		if ( $field->type != 'key_validator' ) {
 			return $field_options;
 		}
-
+		
 		$defaults = array(
 			'key_validator_form_target' => '',
 			'key_validator_invalid_msj' => '',
 			'key_validator_exist'       => '',
 		);
-
+		
 		foreach ( $defaults as $opt => $default ) {
 			$field_options[ $opt ] = isset( $values['field_options'][ $opt . '_' . $field->id ] ) ? $values['field_options'][ $opt . '_' . $field->id ] : $default;
 		}
-
+		
 		return $field_options;
 	}
-
+	
 	/**
 	 * Add the HTML for the field on the front end
 	 *
@@ -285,12 +284,12 @@ class FormidableValidatorField {
 			return;
 		}
 		$field['value'] = stripslashes_deep( $field['value'] );
-
+		
 		?>
-        <input type="text" id='field_<?= $field['field_key'] ?>' name='item_meta[<?= $field['id'] ?>]' value="<?php echo esc_attr( $field['value'] ) ?>"/>
+		<input type="text" id='field_<?php echo  $field['field_key'] ?>' name='item_meta[<?php echo  $field['id'] ?>]' value="<?php echo esc_attr( $field['value'] ) ?>"/>
 		<?php
 	}
-
+	
 	/**
 	 * Add the HTML to display the field in the admin area
 	 *
@@ -304,10 +303,10 @@ class FormidableValidatorField {
 		if ( $field->type != 'key_validator' || empty( $value ) ) {
 			return $value;
 		}
-
+		
 		return $value;
 	}
-
+	
 	/**
 	 * Set display option for the field
 	 *
@@ -328,10 +327,10 @@ class FormidableValidatorField {
 			$display['default_value']  = true;
 			$display['visibility']     = true;
 		}
-
+		
 		return $display;
 	}
-
+	
 	/**
 	 * Validate if exist the key in the form target
 	 *
@@ -343,10 +342,13 @@ class FormidableValidatorField {
 	 * @return mixed
 	 */
 	public function validate_frm_entry( $errors, $posted_field, $posted_value ) {
+		if ( ! empty( $errors ) ) {
+			return $errors;
+		}
 		if ( $posted_field->type == "key_validator" ) {
 			if ( empty( $posted_value ) && $posted_field->required ) {
 				$errors = array_merge( $errors, array( 'field' . $posted_field->id => FrmFieldsHelper::get_error_msg( $posted_field, 'blank' ) ) );
-
+				
 				return $errors;
 			}
 			$target = FrmField::get_option( $posted_field, "key_validator_form_target" );
@@ -357,7 +359,7 @@ class FormidableValidatorField {
 					$msj = FrmFieldsHelper::get_error_msg( FrmField::getOne( $posted_field->id ), 'invalid' );
 				}
 				$fields_ids = array();
-				$key_used   = array();
+//				$key_used   = array();
 				foreach ( json_decode( $target ) as $key => $item ) {
 					$targets_fields = FrmField::get_all_types_in_form( $item->value, 'key_generator' );
 					if ( ! empty( $targets_fields ) ) {
@@ -365,19 +367,19 @@ class FormidableValidatorField {
 							$fields_ids[] = $field->id;
 						}
 					}
-					$targets_fields_used = FrmField::get_all_types_in_form( $item->value, 'key_used' );
-					if ( ! empty( $targets_fields_used ) ) {
-						foreach ( $targets_fields_used as $field ) {
-							$key_used[] = $field->id;
-						}
-					}
-
+//					$targets_fields_used = FrmField::get_all_types_in_form( $item->value, 'key_used' );
+//					if ( ! empty( $targets_fields_used ) ) {
+//						foreach ( $targets_fields_used as $field ) {
+//							$key_used[] = $field->id;
+//						}
+//					}
+				
 				}
 				if ( ! empty( $fields_ids ) ) {
-					$entry_id = $this->value_exists( $fields_ids, htmlentities( $posted_value ) );
+					$entry_id = $this->value_exists( $fields_ids, htmlentities( $posted_value ), $posted_field->form_id );
 					if ( empty( $entry_id ) != $exist ) {
 						$errors = array_merge( $errors, array( 'field' . $posted_field->id => $msj ) );
-
+						
 						return $errors;
 					} else {
 						foreach ( $fields_ids as $key => $id ) {
@@ -394,7 +396,7 @@ class FormidableValidatorField {
 											$result = FrmEntryMeta::update_entry_meta( $entry_id, $status_field->id, null, '1' );
 										}
 									}
-
+									
 								}
 							}
 						}
@@ -402,27 +404,27 @@ class FormidableValidatorField {
 				}
 			}
 		}
-
-
+		
+		
 		return $errors;
 	}
-
+	
 	/**
 	 * Check if given ids have the key value
 	 *
 	 * @param $field_ids
 	 * @param $value
+	 * @param $form_id
 	 *
 	 * @return mixed
 	 */
-	public function value_exists( $field_ids, $value ) {
+	public function value_exists( $field_ids, $value, $form_id ) {
 		global $wpdb;
-		$table  = $wpdb->prefix . "frm_item_metas";
-		$result = $wpdb->get_var( "SELECT item_id FROM $table WHERE field_id IN (" . join( ", ", $field_ids ) . ") AND meta_value = '" . $value . "'" );
-
+		$result = $wpdb->get_var( $wpdb->prepare( "SELECT item_id FROM {$wpdb->prefix}frm_item_metas WHERE field_id IN (%s) AND meta_value = %s", array( join( ", ", $field_ids ), $value ) ) );
+		
 		return $result;
 	}
-
+	
 	/**
 	 * Check if given id have the key value
 	 *
@@ -433,9 +435,8 @@ class FormidableValidatorField {
 	 */
 	public function value_exist( $field_id, $value ) {
 		global $wpdb;
-		$table  = $wpdb->prefix . "frm_item_metas";
-		$result = $wpdb->get_var( "SELECT item_id FROM $table WHERE field_id = '" . $field_id . "' AND meta_value = '" . $value . "'" );
-
+		$result = $wpdb->get_var( $wpdb->prepare( "SELECT item_id FROM {$wpdb->prefix}frm_item_metas WHERE field_id = %d AND meta_value = %s", array( $field_id, $value ) ) );
+		
 		return $result;
 	}
 }
